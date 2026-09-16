@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07090d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SPIDER" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>SPIDER // TRAINING</title>
+</head>
+<body>
+  <div id="installBanner" class="install-banner hidden">
+    <div><strong>Instalar no iPhone</strong><span>No Safari: Compartilhar → Adicionar à Tela de Início.</span></div>
+    <button id="dismissInstall">×</button>
+  </div>
+
+  <header class="app-header">
+    <div>
+      <div class="brand">SPIDER // TRAINING</div>
+      <div class="subtitle">CALISTENIA • COACH ADAPTATIVO • OFFLINE</div>
+    </div>
+    <button id="voiceToggle" class="icon-btn" aria-label="Alternar voz">🔊</button>
+  </header>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="hero card">
+        <div class="eyebrow">PRÓXIMA SESSÃO</div>
+        <div class="hero-row">
+          <div>
+            <h1 id="nextWorkoutTitle">Push + Core</h1>
+            <p id="nextWorkoutMeta">Carregando seu plano...</p>
+          </div>
+          <span id="levelBadge" class="pill">FOUNDATION</span>
+        </div>
+        <div class="goal-line"><span id="goalText">Meta 21/10</span><strong id="daysLeft">—</strong></div>
+        <div class="progress-track"><div id="goalProgress" class="progress-fill"></div></div>
+        <button id="startWorkout" class="primary">COMEÇAR TREINO</button>
+      </div>
+
+      <div class="metric-grid">
+        <article class="card metric"><strong id="streak">0</strong><span>dias seguidos</span></article>
+        <article class="card metric"><strong id="completed">0</strong><span>treinos</span></article>
+        <article class="card metric"><strong id="consistency">0%</strong><span>consistência</span></article>
+        <article class="card metric"><strong id="xp">0</strong><span>XP</span></article>
+      </div>
+
+      <article class="card">
+        <div class="card-title">Coach de hoje</div>
+        <p id="coachMessage" class="muted">Complete sua primeira sessão para eu ajustar a progressão.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-title">Semana atual</div>
+        <div id="weekStrip" class="week-strip"></div>
+      </article>
+
+      <article class="card warning-card">
+        <div class="card-title">Regra do programa</div>
+        <p>Qualidade > quantidade. Pare a série se a técnica quebrar, se aparecer dor aguda ou tontura. O app ajusta volume; não precisa “se destruir” para progredir.</p>
+      </article>
+    </section>
+
+    <section id="train" class="screen">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">MODO TREINO</div>
+          <h2 id="workoutTitle">Treino</h2>
+        </div>
+        <button id="exitWorkout" class="ghost small">SAIR</button>
+      </div>
+
+      <div class="progress-track"><div id="sessionProgress" class="progress-fill"></div></div>
+
+      <article class="card exercise-card">
+        <div class="exercise-topline"><span id="exerciseCounter">1 / 6</span><span id="setCounter">Série 1/3</span></div>
+        <h2 id="exerciseName">Flexão</h2>
+        <div id="exerciseDose" class="dose-big">8 reps</div>
+        <div class="demo-shell">
+          <canvas id="motionCanvas" width="640" height="420"></canvas>
+          <div class="demo-controls">
+            <button id="rotateView" class="ghost small">GIRAR VISÃO</button>
+            <button id="toggleDemo" class="ghost small">PAUSAR DEMO</button>
+          </div>
+        </div>
+        <div id="exerciseCue" class="cue"></div>
+        <details class="instructions">
+          <summary>Como fazer</summary>
+          <ol id="instructionList"></ol>
+          <div id="mistakeList" class="mistakes"></div>
+        </details>
+      </article>
+
+      <article class="card timer-card">
+        <div id="phaseLabel" class="eyebrow">EXECUÇÃO</div>
+        <div id="timer" class="timer">00:00</div>
+        <div class="timer-row">
+          <button id="timerToggle" class="secondary">INICIAR / PAUSAR</button>
+          <button id="completeSet" class="primary">SÉRIE CONCLUÍDA</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-title">Ajuste rápido</div>
+        <div class="four-grid">
+          <button class="ghost effort" data-effort="easy">🟢 Fácil</button>
+          <button class="ghost effort" data-effort="normal">🟡 Boa</button>
+          <button class="ghost effort" data-effort="hard">🟠 Pesada</button>
+          <button class="ghost effort" data-effort="bad">🔴 Parei</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="plan" class="screen">
+      <div class="section-head"><div><div class="eyebrow">PROGRAMA</div><h2>Calistenia sem equipamento</h2></div></div>
+      <article class="card settings-grid">
+        <label>Nível<select id="levelSelect"><option>Foundation</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+        <label>Dias por semana<select id="daysPerWeek"><option value="3">3 dias</option><option value="4" selected>4 dias</option><option value="5">5 dias</option></select></label>
+        <label>Descanso entre séries<select id="restSelect"><option value="45">45s</option><option value="60" selected>60s</option><option value="75">75s</option><option value="90">90s</option></select></label>
+      </article>
+      <div id="planList"></div>
+      <article class="card note"><strong>Costas sem equipamento:</strong> dá para fortalecer escápulas, lombar e cadeia posterior com exercícios no chão, mas movimentos de puxada têm limitação sem barra/elástico. O app não finge que são equivalentes.</article>
+    </section>
+
+    <section id="library" class="screen">
+      <div class="section-head"><div><div class="eyebrow">BIBLIOTECA</div><h2>Aprenda os movimentos</h2></div></div>
+      <input id="exerciseSearch" class="search" placeholder="Buscar: abdômen, costas, flexão..." />
+      <div id="exerciseLibrary"></div>
+    </section>
+
+    <section id="progress" class="screen">
+      <div class="section-head"><div><div class="eyebrow">EVOLUÇÃO</div><h2>Seu progresso</h2></div></div>
+      <div class="metric-grid">
+        <article class="card metric"><strong id="totalMinutes">0</strong><span>minutos</span></article>
+        <article class="card metric"><strong id="bestStreak">0</strong><span>melhor sequência</span></article>
+        <article class="card metric"><strong id="easyRate">0%</strong><span>sessões confortáveis</span></article>
+        <article class="card metric"><strong id="currentLevelMetric">—</strong><span>nível atual</span></article>
+      </div>
+      <article class="card"><div class="card-title">Últimos treinos</div><div id="history"></div></article>
+      <article class="card">
+        <div class="card-title">Check-in por foto</div>
+        <p class="muted smalltext">Salvo localmente no aparelho. Use pose, distância e iluminação parecidas para comparar evolução ao longo do tempo.</p>
+        <input id="photoInput" type="file" accept="image/*" capture="environment" />
+        <div id="photoGrid" class="photo-grid"></div>
+      </article>
+      <article class="card">
+        <div class="card-title">Backup</div>
+        <div class="two-grid"><button id="exportBtn" class="secondary">EXPORTAR</button><button id="importBtn" class="secondary">IMPORTAR</button></div>
+        <input id="importInput" type="file" accept="application/json" hidden />
+      </article>
+    </section>
+
+    <section id="settings" class="screen">
+      <div class="section-head"><div><div class="eyebrow">COACH</div><h2>Preferências</h2></div></div>
+      <article class="card settings-grid">
+        <label>Voz<select id="voiceSelect"></select></label>
+        <label>Velocidade da voz<input id="voiceRate" type="range" min="0.75" max="1.25" step="0.05" value="0.95" /></label>
+        <label><span>Contagem falada</span><input id="spokenCount" type="checkbox" checked /></label>
+        <label><span>Vibração</span><input id="vibrationToggle" type="checkbox" checked /></label>
+      </article>
+      <article class="card"><div class="card-title">Teste de voz</div><button id="testVoice" class="primary">OUVIR COACH</button></article>
+      <article class="card"><div class="card-title">Dados</div><button id="resetData" class="danger">APAGAR DADOS LOCAIS</button></article>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-screen="home" class="active">⌂<span>Hoje</span></button>
+    <button data-screen="plan">▦<span>Plano</span></button>
+    <button data-screen="library">◇<span>Movimentos</span></button>
+    <button data-screen="progress">↗<span>Progresso</span></button>
+    <button data-screen="settings">⚙<span>Coach</span></button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+  <script src="exercises.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
