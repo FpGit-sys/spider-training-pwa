@@ -1,0 +1,14 @@
+{
+  "name": "SPIDER // TRAINING",
+  "short_name": "SPIDER",
+  "description": "Treino de calistenia sem equipamento com progressão adaptativa, guia 3D e coach por voz.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "lang": "pt-BR",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
